@@ -53,26 +53,21 @@ function  calcularDigitoVerificacion ( myNit )  {
 }
 
 const nitIsValid=(nit)=> {
-    console.log("entraniit")
     if (!nit) {
         return true;
     }
-    console.log("siguenit")
 
     var nitRegExp = new RegExp('^[0-9]+(-?[0-9kK])?$');
 
     if (!nitRegExp.test(nit)) {
         return false;
     }
-    console.log("regexnit")
     
     let arr =String(nit).split('-');
     if(arr[0] === nit){
         return true;
     }
     let digito=calcularDigitoVerificacion(arr[0])
-    console.log("digito"+digito)
-    console.log("arr1:"+arr[1])
     if(String(digito) !== String(arr[1])){
         return false;
     }

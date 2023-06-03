@@ -49,8 +49,6 @@ function NuevoProducto() {
         e.preventDefault();
 
         // crear un formdata
-        console.log("agregarproducto")
-        console.log(producto)
         const formData = new FormData();
         formData.append('nombre', producto.nombre);
         formData.append('descripcion', producto.descripcion);
@@ -93,14 +91,11 @@ function NuevoProducto() {
 
     // leer los datos del formulario
     const leerInformacionProducto = e => {
-        console.log(e.target.name)
-        console.log(e.target.value)
         guardarProducto({
             // obtener una copia del state y agregar el nuevo
             ...producto,
             [e.target.name] : e.target.value
         })
-        console.log(producto)
     }
 
     // coloca la imagen en el state

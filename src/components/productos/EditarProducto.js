@@ -95,7 +95,6 @@ function EditarProductos(props) {
             navigate('/productos');
 
         } catch (error) {
-            console.log(error);
             // lanzar alerta
             Swal.fire({
                 type:'error',

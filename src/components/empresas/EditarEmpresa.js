@@ -108,7 +108,6 @@ function EditarEmpresa(props){
         // Destructuring
         const {nit, nombre,  direccion, telefono} = empresa;
 
-        console.log(telefono)
 
         // revisar que las propiedades del state tengan contenido
         let valido = !nombre.length || !nit.length || !direccion.length || !telefono.length;

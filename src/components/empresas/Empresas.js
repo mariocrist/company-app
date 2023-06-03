@@ -27,7 +27,6 @@ function Empresas(props) {
         if(auth.token !== '') {
             // Query a la API
             const consultarAPI = async () => {
-                console.log("consulta")
                 try {
                     const empresasConsulta = await clienteAxios.get('/empresas', {
                         headers: {
@@ -41,14 +40,12 @@ function Empresas(props) {
                 } catch (error) {
                     // Error con authorizacion
                     if(error.response.status = 500) {
-                        console.log("status")
                         navigate('/iniciar-sesion');
                     }
                 }
             }
             consultarAPI();
         } else {
-            console.log("else")
             navigate('/iniciar-sesion')
         }
     }, [] );

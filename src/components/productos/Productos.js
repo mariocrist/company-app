@@ -1,10 +1,13 @@
 import React, {useEffect, useState, useContext,  Fragment} from 'react';
 import { pdfFromReact } from "generate-pdf-from-react-html";
 
+import { sendPDFEmail } from '../../utils/sendPDFEmail';
+
 // importar cliente axios
 import clienteAxios from '../../config/axios';
 import Producto from './Producto';
-import Spinner from '../layout/Spinner';
+//import Spinner from '../layout/Spinner';
+
 import {
     Link,
     useNavigate,
@@ -15,6 +18,7 @@ import { Context } from '../../context/Context';
 
 function Productos() {
     const navigate = useNavigate();
+
 
     // productos = state, guardarproductos = funcion para guardar el state
     const [productos, guardarProductos] = useState([]);
@@ -66,10 +70,6 @@ function Productos() {
         setEmail(event.target.value);
     };
      
-    const sendEmail = () =>{
-                pdfFromReact(".listado-productos", "My-file", "p", true, false)
-    }
-
 
     // spinner de carga
     //if(!productos.length) return <Spinner /> 
@@ -91,7 +91,9 @@ function Productos() {
 
                 <input type='email' className='campo2' onChange={handleChangeEmail} name='email' placeholder='Email' value={email}></input>
                 <button  className="btn btn-verde nvo-empresa" disabled={validaremail()}
-                onClick={ sendEmail()}
+                onClick={ () =>
+                    sendPDFEmail(".listado-productos", "My-file", "p", true,email, false)
+                }
             >Enviar Correo</button>
             </div>
             
@@ -99,7 +101,7 @@ function Productos() {
 
             <ul className="listado-productos">
                 {productos.map(producto => (
-                    <Producto 
+                    <Producto
                         key={producto.id}
                         producto={producto}
                     />

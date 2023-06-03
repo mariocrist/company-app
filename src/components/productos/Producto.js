@@ -1,11 +1,15 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import Swal from 'sweetalert2';
 import clienteAxios from '../../config/axios';
-import {
-    Link,
-  } from 'react-router-dom';
+import { Link ,useNavigate } from 'react-router-dom';
+
+  import { Context } from '../../context/Context';
 
 function Producto({producto}) {
+    const navigate = useNavigate();
+
+    // context para la autenticacion
+    const [auth, guardarAuth ] = useContext(Context );
 
 
     // elimina un producto
@@ -13,7 +17,7 @@ function Producto({producto}) {
         Swal.fire({
             title: '¿Estás seguro?',
             text: "Un producto eliminado no se puede recuperar",
-            type: 'warning',
+            icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -22,7 +26,11 @@ function Producto({producto}) {
         }).then((result) => {
             if (result.value) {
               // eliminar en la rest api
-              clienteAxios.delete(`/productos/${id}`)
+              clienteAxios.delete(`/productos/${id}`, {
+                headers: {
+                    Authorization : `Bearer ${auth.token}`
+                }
+                })
                 .then(res => {
                     if(res.status === 200) {
                         Swal.fire(
@@ -30,13 +38,14 @@ function Producto({producto}) {
                             res.data.mensaje,
                             'success'
                         )
+                        navigate('/productos');
                     }
                 })
             }
         })
     }
 
-    console.log(producto)
+    //console.log(producto)
 
     const {id, nombre, descripcion, precio, imagen, cantidad } = producto;
     var nombreempresa
